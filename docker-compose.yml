@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  postgres-productos:
+    image: postgres:15-alpine
+    container_name: postgres-productos
+    environment:
+      POSTGRES_DB: productos_db
+      POSTGRES_USER: productos_user
+      POSTGRES_PASSWORD: productos_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - productos_data:/var/lib/postgresql/data
+    networks:
+      - microservicios-net
+
+  mariadb-ventas:
+    image: mariadb:10.5
+    container_name: mariadb-ventas
+    environment:
+      MYSQL_DATABASE: ventas_db
+      MYSQL_USER: ventas_user
+      MYSQL_PASSWORD: ventas_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ventas_data:/var/lib/mysql
+    networks:
+      - microservicios-net
+
+  productos:
+    build:
+      context: ./productos
+    container_name: productos-app
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-productos:5432/productos_db
+      SPRING_DATASOURCE_USERNAME: productos_user
+      SPRING_DATASOURCE_PASSWORD: productos_pass
+    depends_on:
+      - postgres-productos
+    networks:
+      - microservicios-net
+
+  ventas:
+    build:
+      context: ./ventas
+    container_name: ventas-app
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb-ventas:3306/ventas_db
+      SPRING_DATASOURCE_USERNAME: ventas_user
+      SPRING_DATASOURCE_PASSWORD: ventas_pass
+    depends_on:
+      - mariadb-ventas
+      - productos
+    networks:
+      - microservicios-net
+
+volumes:
+  productos_data:
+  ventas_data:
+
+networks:
+  microservicios-net:
+    driver: bridge 
