@@ -6,18 +6,16 @@ RUN apk add --no-cache bash
 
 WORKDIR /app
 
-# Copiar archivos necesarios de Maven wrapper
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+# Copiar todo el proyecto (incluye src/, pom.xml, mvnw, etc.)
+COPY . .
+
+# Dar permisos al wrapper
 RUN chmod +x mvnw
 
 # Descargar dependencias
 RUN ./mvnw dependency:go-offline
 
-# Copiar el resto del código fuente
-COPY src ./src
-
-# Construir el JAR del proyecto (sin ejecutar tests)
+# Construir el JAR (sin ejecutar tests)
 RUN ./mvnw clean package -DskipTests
 
 # Runtime stage
@@ -25,11 +23,11 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# Copiar solo el JAR desde el stage de construcción
+# Copiar solo el JAR generado desde el builder
 COPY --from=builder /app/target/*.jar app.jar
 
 # Exponer el puerto por defecto de Spring Boot
 EXPOSE 8080
 
-# Ejecutar el microservicio
-ENTRYPOINT ["java", "-jar", "app.jar"] 
+# Ejecutar la aplicación
+ENTRYPOINT ["java", "-jar", "app.jar"]
