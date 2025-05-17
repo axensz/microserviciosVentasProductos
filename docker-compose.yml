@@ -1,8 +1,7 @@
-version: '3.8'
-
 services:
+# Servicios de base de datos
   postgres-productos:
-    image: postgres:15-alpine
+    image: postgres:15-alpine #Version de Postgres ligera
     container_name: postgres-productos
     environment:
       POSTGRES_DB: productos_db
@@ -11,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - productos_data:/var/lib/postgresql/data
+      - productos_data:/var/lib/postgresql/data # Persistencia de datos-
     networks:
       - microservicios-net
 
@@ -29,7 +28,7 @@ services:
       - ventas_data:/var/lib/mysql
     networks:
       - microservicios-net
-
+# Servicios de microservicios
   productos:
     build:
       context: ./productos
@@ -40,7 +39,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-productos:5432/productos_db
       SPRING_DATASOURCE_USERNAME: productos_user
       SPRING_DATASOURCE_PASSWORD: productos_pass
-    depends_on:
+    depends_on: #dependencias
       - postgres-productos
     networks:
       - microservicios-net
