@@ -2,8 +2,8 @@ package com.pragma.infrastructure.input.rest.controller;
 
 import com.pragma.application.port.input.VentaInputPort;
 import com.pragma.domain.model.Venta;
-import com.pragma.infrastructure.input.rest.dto.VentaRequestDto;
-import com.pragma.infrastructure.input.rest.dto.VentaResponseDto;
+import com.pragma.application.dto.VentaRequestDto; // New import
+import com.pragma.application.dto.VentaResponseDto; // New import
 import com.pragma.infrastructure.input.rest.mapper.VentaRestMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
