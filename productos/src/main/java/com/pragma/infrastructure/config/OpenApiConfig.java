@@ -1,41 +1,32 @@
 package com.pragma.infrastructure.config;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.servers.Server;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
+@OpenAPIDefinition(
+    info = @Info(
+        title = "API de Productos",
+        version = "1.0",
+        description = "API REST para la gestión de productos",
+        contact = @Contact(
+            name = "Pragma",
+            email = "contacto@pragma.com",
+            url = "https://www.pragma.com"
+        ),
+        license = @License(
+            name = "Apache 2.0",
+            url = "http://www.apache.org/licenses/LICENSE-2.0.html"
+        )
+    ),
+    servers = @Server(
+        url = "/api/v1",
+        description = "Servidor de Producción"
+    )
+)
 public class OpenApiConfig {
-
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
-
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .openapi("3.0.1")
-                .info(new Info()
-                        .title("API de Productos")
-                        .description("API REST para la gestión de productos")
-                        .version("1.0")
-                        .contact(new Contact()
-                                .name("Pragma")
-                                .email("contacto@pragma.com")
-                                .url("https://www.pragma.com"))
-                        .license(new License()
-                                .name("Apache 2.0")
-                                .url("http://www.apache.org/licenses/LICENSE-2.0.html")))
-                .servers(List.of(
-                        new Server()
-                                .url(contextPath)
-                                .description("Servidor de Producción")
-                ));
-    }
 } 
