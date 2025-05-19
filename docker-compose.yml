@@ -13,56 +13,33 @@ services:
       - productos_data:/var/lib/postgresql/data # Persistencia de datos-
     networks:
       - microservicios-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U productos_user -d productos_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  mariadb-ventas:
-    image: mariadb:10.5
-    container_name: mariadb-ventas
-    environment:
-      MYSQL_DATABASE: ventas_db
-      MYSQL_USER: ventas_user
-      MYSQL_PASSWORD: ventas_pass
-      MYSQL_ROOT_PASSWORD: root_pass
-    ports:
-      - "3306:3306"
-    volumes:
-      - ventas_data:/var/lib/mysql
-    networks:
-      - microservicios-net
 # Servicios de microservicios
   productos:
     build:
       context: ./productos
     container_name: productos-app
     ports:
-      - "8081:8080"
+      - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-productos:5432/productos_db
       SPRING_DATASOURCE_USERNAME: productos_user
       SPRING_DATASOURCE_PASSWORD: productos_pass
-    depends_on: #dependencias
-      - postgres-productos
-    networks:
-      - microservicios-net
-
-  ventas:
-    build:
-      context: ./ventas
-    container_name: ventas-app
-    ports:
-      - "8082:8081" # Corrected port mapping
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb-ventas:3306/ventas_db
-      SPRING_DATASOURCE_USERNAME: ventas_user
-      SPRING_DATASOURCE_PASSWORD: ventas_pass
+      SPRING_PROFILES_ACTIVE: prod
     depends_on:
-      - mariadb-ventas
-      - productos
+      postgres-productos:
+        condition: service_healthy
     networks:
       - microservicios-net
+    restart: unless-stopped
 
 volumes:
   productos_data:
-  ventas_data:
 
 networks:
   microservicios-net:
