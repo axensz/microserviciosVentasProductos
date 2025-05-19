@@ -28,6 +28,7 @@ public interface ProductRestMapper {
      * @param productRequestDto El DTO de solicitud de producto.
      * @return El objeto de dominio {@link Producto} mapeado.
      */
+    @Mapping(target = "id", ignore = true)
     Producto toProducto(ProductRequestDto productRequestDto);
 
     /**

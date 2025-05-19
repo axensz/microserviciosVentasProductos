@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Implementación de {@link ProductInputPort} que define los casos de uso para la gestión de productos.
@@ -28,7 +27,7 @@ public class ProductUseCase implements ProductInputPort {
      *
      * @param producto El objeto {@link Producto} a crear. No debe ser nulo y debe cumplir con las validaciones básicas.
      * @return El producto creado, usualmente con su ID asignado por el sistema de persistencia.
-     * @throws ValidationException Si el producto es nulo o sus datos no son válidos (nombre, precio, stock).
+     * @throws com.pragma.application.exception.ValidationException Si el producto es nulo o sus datos no son válidos (nombre, precio, stock).
      */
     @Override
     @Transactional
@@ -53,7 +52,7 @@ public class ProductUseCase implements ProductInputPort {
      *
      * @param id El ID del producto a obtener. No debe ser nulo.
      * @return El {@link Producto} encontrado.
-     * @throws ValidationException Si el ID del producto es nulo.
+     * @throws com.pragma.application.exception.ValidationException Si el ID del producto es nulo.
      * @throws ProductoNotFoundException Si no se encuentra el producto con el ID especificado.
      */
     @Override
@@ -83,7 +82,7 @@ public class ProductUseCase implements ProductInputPort {
      * @param id El ID del producto a actualizar. No debe ser nulo.
      * @param productoActualizado El objeto {@link Producto} con la nueva información. No debe ser nulo.
      * @return El producto actualizado.
-     * @throws ValidationException Si el ID o el producto son nulos, o si los datos del producto actualizado no son válidos.
+     * @throws com.pragma.application.exception.ValidationException Si el ID o el producto son nulos, o si los datos del producto actualizado no son válidos.
      * @throws ProductoNotFoundException Si no se encuentra el producto con el ID especificado para actualizar.
      */
     @Override
@@ -119,7 +118,7 @@ public class ProductUseCase implements ProductInputPort {
      * @param id El ID del producto cuyo stock se va a actualizar. No debe ser nulo.
      * @param cantidad La cantidad a sumar o restar del stock (positiva para sumar, negativa para restar).
      * @return El producto con el stock actualizado.
-     * @throws ValidationException Si el ID o la cantidad son nulos.
+     * @throws com.pragma.application.exception.ValidationException Si el ID o la cantidad son nulos.
      * @throws StockUpdateException Si el stock resultante es negativo.
      * @throws ProductoNotFoundException Si no se encuentra el producto con el ID especificado para actualizar el stock.
      */
@@ -146,7 +145,7 @@ public class ProductUseCase implements ProductInputPort {
      * Elimina un producto del sistema basado en su ID.
      *
      * @param id El ID del producto a eliminar. No debe ser nulo.
-     * @throws ValidationException Si el ID del producto es nulo.
+     * @throws com.pragma.application.exception.ValidationException Si el ID del producto es nulo.
      * @throws ProductoNotFoundException Si no se encuentra el producto con el ID especificado para eliminar.
      */
     @Override
