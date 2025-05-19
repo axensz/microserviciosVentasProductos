@@ -1,4 +1,4 @@
-package com.pragma.infrastructure.input.rest.dto;
+package com.pragma.application.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;

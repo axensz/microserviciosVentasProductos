@@ -132,4 +132,17 @@ public class VentaUseCase implements VentaInputPort {
             }
         }
     }
+
+    private void actualizarStockProducto(DetalleVenta detalle) {
+        ProductoResponseDto producto = productoClientePort.obtenerProductoPorId(detalle.getProductoId());
+        if (producto == null) {
+            throw new ProductoNoEncontradoException("Producto no encontrado con ID: " + detalle.getProductoId());
+        }
+        if (producto.getStock() < detalle.getCantidad()) {
+            throw new StockInsuficienteException("Stock insuficiente para el producto: " + producto.getNombre());
+        }
+        Integer stockActualizado = producto.getStock() - detalle.getCantidad();
+        productoClientePort.actualizarStockProducto(detalle.getProductoId(), stockActualizado);
+        detalle.setStockRestante(stockActualizado); // Corrected method call
+    }
 }

@@ -1,4 +1,4 @@
-package com.pragma.infrastructure.input.rest.dto;
+package com.pragma.application.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Adaptador que implementa {@link VentaRepository} utilizando Spring Data JPA.
@@ -50,13 +51,11 @@ public class MariaDbVentaRepositoryAdapter implements VentaRepository {
         // Limpiar la lista de detalles para evitar duplicados
         ventaEntity.getDetalles().clear();
         
-        // Agregar cada detalle a la venta y establecer la relación bidireccional
-        if (venta.getDetalles() != null) {
-            venta.getDetalles().forEach(detalleVenta -> {
-                DetalleVentaEntity detalleVentaEntity = ventaPersistenceMapper.toDetalleVentaEntity(detalleVenta);
-                ventaEntity.addDetalle(detalleVentaEntity);
-            });
-        }
+        // Mapear los detalles de la venta del dominio a la entidad
+        List<DetalleVentaEntity> detalleEntities = venta.getDetalles().stream()
+                .map(ventaPersistenceMapper::toDetalleVentaEntity)
+                .collect(Collectors.toList());
+        ventaEntity.setDetalles(detalleEntities);
         
         // Guardar la venta y sus detalles
         VentaEntity savedVentaEntity = ventaSpringDataJpaRepository.save(ventaEntity);
