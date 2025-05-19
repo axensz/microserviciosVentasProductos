@@ -34,7 +34,6 @@ public abstract class VentaRestMapperDecorator implements VentaRestMapper {
     
     @Override
     public Venta toVenta(VentaRequestDto ventaRequestDto) {
-        // Delegate the implementation to the generated MapStruct code
         return delegate.toVenta(ventaRequestDto);
     }
 }
