@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 @Component
 @RequiredArgsConstructor
-public class PostgresVentaRepositoryAdapter implements VentaRepository {
+public class MariaDbVentaRepositoryAdapter implements VentaRepository {
 
     private final VentaSpringDataJpaRepository ventaSpringDataJpaRepository;
     private final VentaPersistenceMapper ventaPersistenceMapper;
