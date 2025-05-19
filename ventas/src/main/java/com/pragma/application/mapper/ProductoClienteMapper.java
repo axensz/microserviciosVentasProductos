@@ -10,6 +10,6 @@ import org.mapstruct.ReportingPolicy;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface ProductoClienteMapper {
 
-    Producto toDomain(ProductoResponseDto productoResponseDto); // Renamed from toProducto
+    Producto toDomain(com.pragma.application.dto.ProductoResponseDto productoResponseDto); // Renamed from toProducto
     // Consider adding a method to map from domain.Producto to a DTO if needed for requests to product service
 }

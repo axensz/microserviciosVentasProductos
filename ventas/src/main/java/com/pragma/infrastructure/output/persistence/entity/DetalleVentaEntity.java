@@ -29,6 +29,10 @@ public class DetalleVentaEntity {
     @JoinColumn(name = "venta_id", nullable = false)
     private VentaEntity venta;
 
+    public void setVenta(VentaEntity venta) {
+        this.venta = venta;
+    }
+
     /**
      * Identificador del producto vendido.
      */

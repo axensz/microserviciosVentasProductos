@@ -28,7 +28,7 @@ import java.util.List;
 public class VentaUseCase implements VentaInputPort {
 
     private final VentaRepository ventaRepository;
-    private final ProductoServicePort productoServicePort;
+    private final ProductoServicePort productoServicePort; // Corrected field name
 
     /**
      * {@inheritDoc}
@@ -134,15 +134,20 @@ public class VentaUseCase implements VentaInputPort {
     }
 
     private void actualizarStockProducto(DetalleVenta detalle) {
-        ProductoResponseDto producto = productoClientePort.obtenerProductoPorId(detalle.getProductoId());
+        // Ensure ProductoResponseDto is imported if not already
+        // import com.pragma.application.dto.ProductoResponseDto; 
+        // Ensure ProductoNoEncontradoException is imported if not already
+        // import com.pragma.application.exception.ProductoNoEncontradoException;
+        
+        com.pragma.application.dto.ProductoResponseDto producto = productoServicePort.obtenerProductoPorId(detalle.getProductoId()); // Corrected field name
         if (producto == null) {
-            throw new ProductoNoEncontradoException("Producto no encontrado con ID: " + detalle.getProductoId());
+            throw new com.pragma.application.exception.ProductoNoEncontradoException("Producto no encontrado con ID: " + detalle.getProductoId()); // Corrected exception
         }
         if (producto.getStock() < detalle.getCantidad()) {
             throw new StockInsuficienteException("Stock insuficiente para el producto: " + producto.getNombre());
         }
         Integer stockActualizado = producto.getStock() - detalle.getCantidad();
-        productoClientePort.actualizarStockProducto(detalle.getProductoId(), stockActualizado);
-        detalle.setStockRestante(stockActualizado); // Corrected method call
+        productoServicePort.actualizarStockProducto(detalle.getProductoId(), stockActualizado); // Corrected field name
+        detalle.setStockRestante(stockActualizado);
     }
 }

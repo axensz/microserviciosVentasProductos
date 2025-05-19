@@ -44,6 +44,14 @@ public class VentaEntity {
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleVentaEntity> detalles = new ArrayList<>();
 
+    public List<DetalleVentaEntity> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<DetalleVentaEntity> detalles) {
+        this.detalles = detalles;
+    }
+
     /**
      * Método helper para agregar un detalle a la venta y establecer la relación bidireccional.
      *

@@ -38,6 +38,11 @@ public class DetalleVenta {
     private Double subtotal;
 
     /**
+     * Stock restante del producto.
+     */
+    private Integer stockRestante;
+
+    /**
      * Constructor por defecto.
      * Requerido por algunos frameworks de persistencia.
      */
@@ -53,14 +58,16 @@ public class DetalleVenta {
      * @param cantidad La cantidad del producto vendido.
      * @param precioUnitario El precio unitario del producto al momento de la venta.
      * @param subtotal El subtotal del detalle.
+     * @param stockRestante El stock restante del producto.
      */
-    public DetalleVenta(Long id, Long productoId, String nombreProducto, Integer cantidad, Double precioUnitario, Double subtotal) {
+    public DetalleVenta(Long id, Long productoId, String nombreProducto, Integer cantidad, Double precioUnitario, Double subtotal, Integer stockRestante) {
         this.id = id;
         this.productoId = productoId;
         this.nombreProducto = nombreProducto;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.subtotal = subtotal;
+        this.stockRestante = stockRestante;
     }
 
     /**
@@ -169,5 +176,23 @@ public class DetalleVenta {
      */
     public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    /**
+     * Obtiene el stock restante del producto.
+     *
+     * @return El stock restante.
+     */
+    public Integer getStockRestante() {
+        return stockRestante;
+    }
+
+    /**
+     * Establece el stock restante del producto.
+     *
+     * @param stockRestante El nuevo stock restante.
+     */
+    public void setStockRestante(Integer stockRestante) {
+        this.stockRestante = stockRestante;
     }
 }

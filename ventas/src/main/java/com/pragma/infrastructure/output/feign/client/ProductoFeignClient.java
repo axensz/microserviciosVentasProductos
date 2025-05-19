@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ProductoFeignClient {
 
     @GetMapping("/api/v1/productos/{id}")
-    ResponseEntity<ProductoResponseDto> obtenerProductoPorId(@PathVariable("id") Long id);
+    ResponseEntity<com.pragma.application.dto.ProductoResponseDto> obtenerProductoPorId(@PathVariable("id") Long id);
 
     @PatchMapping("/api/v1/productos/{id}/stock")
-    ResponseEntity<ProductoResponseDto> actualizarStockProducto(@PathVariable("id") Long id, @RequestParam("cantidad") int cantidad);
+    ResponseEntity<com.pragma.application.dto.ProductoResponseDto> actualizarStockProducto(@PathVariable("id") Long id, @RequestParam("cantidad") int cantidad);
 }
