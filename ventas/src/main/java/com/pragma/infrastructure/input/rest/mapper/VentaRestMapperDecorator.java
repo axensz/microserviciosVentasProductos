@@ -1,5 +1,6 @@
 package com.pragma.infrastructure.input.rest.mapper;
 
+import com.pragma.application.dto.VentaRequestDto;
 import com.pragma.application.dto.VentaResponseDto;
 import com.pragma.application.mapper.VentaDtoMapper;
 import com.pragma.domain.model.Venta;
