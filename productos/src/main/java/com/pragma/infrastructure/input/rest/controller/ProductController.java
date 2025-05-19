@@ -27,7 +27,7 @@ import java.util.List;
  * y {@link ProductRestMapper} para el mapeo entre DTOs y el modelo de dominio.
  */
 @RestController
-@RequestMapping("/api/v1/productos")
+@RequestMapping("/productos")
 @RequiredArgsConstructor
 @Tag(name = "Productos", description = "API para la gestión de productos")
 public class ProductController {
