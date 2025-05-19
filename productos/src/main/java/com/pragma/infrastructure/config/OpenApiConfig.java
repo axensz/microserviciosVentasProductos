@@ -20,6 +20,7 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
+                .openapi("3.0.1")
                 .info(new Info()
                         .title("API de Productos")
                         .description("API REST para la gestión de productos")
