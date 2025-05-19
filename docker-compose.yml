@@ -49,7 +49,7 @@ services:
       context: ./ventas
     container_name: ventas-app
     ports:
-      - "8082:8080"
+      - "8082:8081" # Corrected port mapping
     environment:
       SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb-ventas:3306/ventas_db
       SPRING_DATASOURCE_USERNAME: ventas_user
@@ -66,4 +66,4 @@ volumes:
 
 networks:
   microservicios-net:
-    driver: bridge 
+    driver: bridge
