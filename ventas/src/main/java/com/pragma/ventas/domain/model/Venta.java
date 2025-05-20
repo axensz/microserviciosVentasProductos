@@ -36,7 +36,7 @@ public class Venta {
      * Identificador del cliente que realiza la compra.
      * No puede ser nulo.
      */
-    @Column(name = "cliente_id", nullable = false)
+    @Column(nullable = false)
     private String clienteId;
     
     /**
