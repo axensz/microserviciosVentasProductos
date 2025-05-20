@@ -46,7 +46,7 @@ public class DetalleVenta {
      * Precio unitario del producto al momento de la venta.
      * No puede ser nulo.
      */
-    @Column(name = "precio_unitario", nullable = false)
+    @Column(nullable = false)
     private Double precioUnitario;
     
     /**
