@@ -32,7 +32,7 @@ public class DetalleVenta {
      * Identificador del producto vendido.
      * No puede ser nulo.
      */
-    @Column(name = "producto_id", nullable = false)
+    @Column(nullable = false)
     private Long productoId;
     
     /**
