@@ -1,7 +1,7 @@
 services:
 # Servicios de base de datos
   postgres-productos:
-    image: postgres:15-alpine #Version de Postgres ligera
+    image: postgres:15-alpine
     container_name: postgres-productos
     environment:
       POSTGRES_DB: productos_db
@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - productos_data:/var/lib/postgresql/data # Persistencia de datos-
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - microservicios-net
     healthcheck:
@@ -30,7 +30,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ventas_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     networks:
       - microservicios-net
     healthcheck:
@@ -69,6 +69,7 @@ services:
       SPRING_DATASOURCE_USERNAME: ventas_user
       SPRING_DATASOURCE_PASSWORD: ventas_pass
       SPRING_PROFILES_ACTIVE: prod
+      PRODUCTOS_SERVICE_URL: http://productos:8080
     depends_on:
       mariadb-ventas:
         condition: service_healthy
@@ -79,8 +80,8 @@ services:
     restart: unless-stopped
 
 volumes:
-  productos_data:
-  ventas_data:
+  postgres_data:
+  mariadb_data:
 
 networks:
   microservicios-net:
