@@ -1,18 +1,37 @@
 package com.pragma.ventas.infrastructure.input.dto;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 
+/**
+ * DTO para la solicitud de registro de ventas.
+ * Este DTO contiene la información necesaria para registrar una nueva venta,
+ * incluyendo los detalles de los productos vendidos.
+ *
+ * @version 1.0
+ * @since 2025-05-20
+ */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class VentaRequestDto {
-    @NotBlank(message = "El ID del cliente es requerido")
     private String clienteId;
-    
-    @NotEmpty(message = "La venta debe tener al menos un detalle")
-    @Valid
-    private List<DetalleVentaRequestDto> detalles;
+    private List<DetalleVentaDto> detalles;
+
+    /**
+     * DTO para los detalles de una venta en la solicitud.
+     */
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DetalleVentaDto {
+        private Long productoId;
+        private Integer cantidad;
+    }
 } 

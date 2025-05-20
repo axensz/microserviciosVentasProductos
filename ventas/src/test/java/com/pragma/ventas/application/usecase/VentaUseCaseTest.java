@@ -7,7 +7,6 @@ import com.pragma.ventas.domain.repository.VentaGateway;
 import com.pragma.ventas.domain.repository.IProductoGateway;
 import com.pragma.ventas.application.exception.ProductNotFoundException;
 import com.pragma.ventas.infrastructure.input.dto.VentaRequestDto;
-import com.pragma.ventas.infrastructure.input.dto.DetalleVentaRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -76,11 +75,12 @@ class VentaUseCaseTest {
         VentaRequestDto ventaDto = new VentaRequestDto();
         ventaDto.setClienteId("123");
         
-        DetalleVentaRequestDto detalleDto = new DetalleVentaRequestDto();
-        detalleDto.setProductoId(1L);
-        detalleDto.setCantidad(1);
+        VentaRequestDto.DetalleVentaDto detalleDto = VentaRequestDto.DetalleVentaDto.builder()
+            .productoId(1L)
+            .cantidad(1)
+            .build();
         
-        List<DetalleVentaRequestDto> detalles = new ArrayList<>();
+        List<VentaRequestDto.DetalleVentaDto> detalles = new ArrayList<>();
         detalles.add(detalleDto);
         ventaDto.setDetalles(detalles);
         
@@ -94,11 +94,12 @@ class VentaUseCaseTest {
         VentaRequestDto ventaDto = new VentaRequestDto();
         ventaDto.setClienteId("123");
         
-        DetalleVentaRequestDto detalleDto = new DetalleVentaRequestDto();
-        detalleDto.setProductoId(1L);
-        detalleDto.setCantidad(20); // Más que el stock disponible
+        VentaRequestDto.DetalleVentaDto detalleDto = VentaRequestDto.DetalleVentaDto.builder()
+            .productoId(1L)
+            .cantidad(20) // Más que el stock disponible
+            .build();
         
-        List<DetalleVentaRequestDto> detalles = new ArrayList<>();
+        List<VentaRequestDto.DetalleVentaDto> detalles = new ArrayList<>();
         detalles.add(detalleDto);
         ventaDto.setDetalles(detalles);
         
@@ -121,11 +122,12 @@ class VentaUseCaseTest {
         VentaRequestDto ventaDto = new VentaRequestDto();
         ventaDto.setClienteId("123");
         
-        DetalleVentaRequestDto detalleDto = new DetalleVentaRequestDto();
-        detalleDto.setProductoId(1L);
-        detalleDto.setCantidad(1);
+        VentaRequestDto.DetalleVentaDto detalleDto = VentaRequestDto.DetalleVentaDto.builder()
+            .productoId(1L)
+            .cantidad(1)
+            .build();
         
-        List<DetalleVentaRequestDto> detalles = new ArrayList<>();
+        List<VentaRequestDto.DetalleVentaDto> detalles = new ArrayList<>();
         detalles.add(detalleDto);
         ventaDto.setDetalles(detalles);
         
@@ -169,18 +171,20 @@ class VentaUseCaseTest {
         VentaRequestDto ventaDto = new VentaRequestDto();
         ventaDto.setClienteId("123");
         
-        List<DetalleVentaRequestDto> detalles = new ArrayList<>();
+        List<VentaRequestDto.DetalleVentaDto> detalles = new ArrayList<>();
         
         // Primer detalle
-        DetalleVentaRequestDto detalle1Dto = new DetalleVentaRequestDto();
-        detalle1Dto.setProductoId(1L);
-        detalle1Dto.setCantidad(2);
+        VentaRequestDto.DetalleVentaDto detalle1Dto = VentaRequestDto.DetalleVentaDto.builder()
+            .productoId(1L)
+            .cantidad(2)
+            .build();
         detalles.add(detalle1Dto);
         
         // Segundo detalle
-        DetalleVentaRequestDto detalle2Dto = new DetalleVentaRequestDto();
-        detalle2Dto.setProductoId(2L);
-        detalle2Dto.setCantidad(3);
+        VentaRequestDto.DetalleVentaDto detalle2Dto = VentaRequestDto.DetalleVentaDto.builder()
+            .productoId(2L)
+            .cantidad(3)
+            .build();
         detalles.add(detalle2Dto);
         
         ventaDto.setDetalles(detalles);

@@ -15,9 +15,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Implementation of {@link VentaInputPort} that defines the use cases for sales management.
- * This class contains the main business logic related to sales operations,
- * interacting with the persistence layer through repositories.
+ * Implementación de {@link VentaInputPort} que define los casos de uso para la gestión de ventas.
+ * Esta clase contiene la lógica de negocio principal relacionada con las operaciones de ventas,
+ * interactuando con la capa de persistencia a través de los gateways.
+ *
+ * @version 1.0
+ * @since 2025-05-20
  */
 @Service
 @RequiredArgsConstructor
@@ -27,12 +30,11 @@ public class VentaUseCase implements VentaInputPort {
     private final VentaGateway ventaGateway;
 
     /**
-     * Registers a new sale in the system.
-     *
-     * @param ventaDto The {@link VentaRequestDto} object to register. Must not be null and must comply with basic validations.
-     * @return The registered sale, usually with its ID assigned by the persistence system.
-     * @throws IllegalArgumentException If the sale is null or its data is invalid.
-     * @throws ProductNotFoundException If any of the products in the sale do not exist.
+     * {@inheritDoc}
+     * <p>
+     * Implementación que registra una nueva venta, validando la existencia de los productos
+     * y calculando los totales correspondientes.
+     * </p>
      */
     @Override
     @Transactional
@@ -89,17 +91,26 @@ public class VentaUseCase implements VentaInputPort {
         return ventaGateway.guardarVenta(venta);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Venta> obtenerVentas() {
         return ventaGateway.obtenerVentas();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Venta obtenerVentaPorId(Long id) {
         return ventaGateway.obtenerVentaPorId(id)
             .orElseThrow(() -> new IllegalArgumentException("Venta no encontrada con ID: " + id));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Venta> obtenerVentasPorProducto(Long productoId) {
         if (!productoRepository.validarExistenciaProducto(productoId)) {
@@ -108,6 +119,9 @@ public class VentaUseCase implements VentaInputPort {
         return ventaGateway.obtenerVentasPorProducto(productoId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Venta> obtenerVentasPorFecha(LocalDate fecha) {
         return ventaGateway.obtenerVentasPorFecha(fecha);

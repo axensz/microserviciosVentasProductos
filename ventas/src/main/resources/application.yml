@@ -20,9 +20,9 @@ spring:
     activate:
       on-profile: prod
   application:
-    name: ventas-service
+    name: ventas-app
   datasource:
-    url: jdbc:mariadb://mariadb-ventas:3306/ventas_db?createDatabaseIfNotExist=true
+    url: jdbc:mariadb://mariadb-ventas:3306/ventas_db
     username: ventas_user
     password: ventas_pass
     driver-class-name: org.mariadb.jdbc.Driver
@@ -63,3 +63,10 @@ springdoc:
 productos:
   service:
     url: productos-app:8080 
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true 

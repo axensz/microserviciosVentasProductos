@@ -20,7 +20,7 @@ RUN ./mvnw clean package -DskipTests
 
 # Runtime stage
 FROM eclipse-temurin:17-jre-alpine
-
+VOLUME /tmp
 WORKDIR /app
 
 # Copiar solo el JAR generado desde el builder

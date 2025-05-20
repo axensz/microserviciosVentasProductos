@@ -3,7 +3,6 @@ package com.pragma.ventas.infrastructure.input.controller;
 import com.pragma.ventas.application.port.VentaInputPort;
 import com.pragma.ventas.domain.model.Venta;
 import com.pragma.ventas.infrastructure.input.dto.VentaRequestDto;
-import com.pragma.ventas.infrastructure.input.dto.DetalleVentaRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +38,12 @@ class VentaControllerTest {
         VentaRequestDto ventaDto = new VentaRequestDto();
         ventaDto.setClienteId("123");
         
-        DetalleVentaRequestDto detalleDto = new DetalleVentaRequestDto();
-        detalleDto.setProductoId(1L);
-        detalleDto.setCantidad(1);
+        VentaRequestDto.DetalleVentaDto detalleDto = VentaRequestDto.DetalleVentaDto.builder()
+            .productoId(1L)
+            .cantidad(1)
+            .build();
         
-        List<DetalleVentaRequestDto> detalles = new ArrayList<>();
+        List<VentaRequestDto.DetalleVentaDto> detalles = new ArrayList<>();
         detalles.add(detalleDto);
         ventaDto.setDetalles(detalles);
         
