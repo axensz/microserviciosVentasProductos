@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -68,8 +71,9 @@ public class VentaController {
     @ApiResponse(responseCode = "200", description = "Listado de ventas por fecha")
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional(readOnly = true)
-    public ResponseEntity<List<Venta>> obtenerVentasPorFecha(
-            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
-        return ResponseEntity.ok(ventaInputPort.obtenerVentasPorFecha(fecha));
+    public ResponseEntity<List<Venta>> obtenerVentasPorFecha(@PathVariable String fecha) {
+        LocalDateTime dateTime = LocalDateTime.parse(fecha, DateTimeFormatter.ISO_DATE_TIME);
+        LocalDate localDate = dateTime.atZone(ZoneId.systemDefault()).toLocalDate();
+        return ResponseEntity.ok(ventaInputPort.obtenerVentasPorFecha(localDate));
     }
 } 
