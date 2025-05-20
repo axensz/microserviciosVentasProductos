@@ -37,9 +37,10 @@ spring:
     open-in-view: false
 
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: /api/v1
+  address: 0.0.0.0
 
 springdoc:
   api-docs:
