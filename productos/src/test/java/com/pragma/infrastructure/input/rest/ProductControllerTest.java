@@ -1,6 +1,6 @@
 package com.pragma.infrastructure.input.rest;
 
-import com.pragma.application.usecase.ProductUseCase;
+import com.pragma.application.port.input.ProductInputPort;
 import com.pragma.domain.model.Producto;
 import com.pragma.infrastructure.input.rest.controller.ProductController;
 import com.pragma.infrastructure.input.rest.dto.ProductRequestDto;
@@ -30,7 +30,7 @@ class ProductControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ProductUseCase productUseCase;
+    private ProductInputPort productInputPort;
 
     @MockBean
     private ProductRestMapper productRestMapper;
@@ -68,10 +68,10 @@ class ProductControllerTest {
     @Test
     void createProduct_ValidRequest_ShouldReturnCreated() throws Exception {
         when(productRestMapper.toProducto(any(ProductRequestDto.class))).thenReturn(producto);
-        when(productUseCase.crearProducto(any(Producto.class))).thenReturn(producto);
+        when(productInputPort.crearProducto(any(Producto.class))).thenReturn(producto);
         when(productRestMapper.toProductResponseDto(any(Producto.class))).thenReturn(responseDto);
 
-        mockMvc.perform(post("/api/v1/productos")
+        mockMvc.perform(post("/productos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isCreated())
@@ -81,10 +81,10 @@ class ProductControllerTest {
 
     @Test
     void getProduct_ExistingId_ShouldReturnProduct() throws Exception {
-        when(productUseCase.obtenerProductoPorId(1L)).thenReturn(producto);
+        when(productInputPort.obtenerProductoPorId(1L)).thenReturn(producto);
         when(productRestMapper.toProductResponseDto(any(Producto.class))).thenReturn(responseDto);
 
-        mockMvc.perform(get("/api/v1/productos/1"))
+        mockMvc.perform(get("/productos/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.nombre").value("Test Product"));
@@ -95,10 +95,10 @@ class ProductControllerTest {
         List<Producto> productos = Arrays.asList(producto);
         List<ProductResponseDto> responseDtos = Arrays.asList(responseDto);
 
-        when(productUseCase.obtenerTodosLosProductos()).thenReturn(productos);
+        when(productInputPort.obtenerTodosLosProductos()).thenReturn(productos);
         when(productRestMapper.toProductResponseDtoList(any())).thenReturn(responseDtos);
 
-        mockMvc.perform(get("/api/v1/productos"))
+        mockMvc.perform(get("/productos"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].nombre").value("Test Product"));
@@ -107,10 +107,10 @@ class ProductControllerTest {
     @Test
     void updateProduct_ValidRequest_ShouldReturnUpdated() throws Exception {
         when(productRestMapper.toProducto(any(ProductRequestDto.class))).thenReturn(producto);
-        when(productUseCase.actualizarProducto(any(Long.class), any(Producto.class))).thenReturn(producto);
+        when(productInputPort.actualizarProducto(any(Long.class), any(Producto.class))).thenReturn(producto);
         when(productRestMapper.toProductResponseDto(any(Producto.class))).thenReturn(responseDto);
 
-        mockMvc.perform(put("/api/v1/productos/1")
+        mockMvc.perform(put("/productos/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk())
@@ -120,10 +120,10 @@ class ProductControllerTest {
 
     @Test
     void updateStock_ValidAmount_ShouldReturnUpdated() throws Exception {
-        when(productUseCase.actualizarStockProducto(1L, 5)).thenReturn(producto);
+        when(productInputPort.actualizarStockProducto(1L, 5)).thenReturn(producto);
         when(productRestMapper.toProductResponseDto(any(Producto.class))).thenReturn(responseDto);
 
-        mockMvc.perform(patch("/api/v1/productos/1/stock")
+        mockMvc.perform(patch("/productos/1/stock")
                 .param("cantidad", "5"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
@@ -132,9 +132,9 @@ class ProductControllerTest {
 
     @Test
     void deleteProduct_ExistingId_ShouldReturnNoContent() throws Exception {
-        doNothing().when(productUseCase).eliminarProductoPorId(1L);
+        doNothing().when(productInputPort).eliminarProductoPorId(1L);
 
-        mockMvc.perform(delete("/api/v1/productos/1"))
+        mockMvc.perform(delete("/productos/1"))
                 .andExpect(status().isNoContent());
     }
 } 

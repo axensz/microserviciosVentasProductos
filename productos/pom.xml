@@ -25,6 +25,9 @@
         <lombok.version>1.18.30</lombok.version>
         <jacoco.version>0.8.12</jacoco.version>
         <bytebuddy.version>1.14.14</bytebuddy.version>
+        <jacoco.agent.argLine>
+            -javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${project.build.directory}/jacoco.exec
+        </jacoco.agent.argLine>
     </properties>
 
     <dependencies>
@@ -167,9 +170,13 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.10</version>
+                <version>${jacoco.version}</version>
+                <configuration>
+                    <propertyName>jacoco.agent.argLine</propertyName>
+                </configuration>
                 <executions>
                     <execution>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -189,7 +196,17 @@
                         <configuration>
                             <rules>
                                 <rule>
-                                    <element>PACKAGE</element>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.90</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                                <rule>
+                                    <element>CLASS</element>
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
@@ -197,6 +214,10 @@
                                             <minimum>0.80</minimum>
                                         </limit>
                                     </limits>
+                                    <excludes>
+                                        <exclude>com.pragma.infrastructure.config.*</exclude>
+                                        <exclude>com.pragma.*</exclude>
+                                    </excludes>
                                 </rule>
                             </rules>
                         </configuration>
@@ -208,11 +229,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
                 <configuration>
-                    <argLine>
-                        @{jacoco.agent.argLine}
-                        -Dnet.bytebuddy.experimental=true
-                    </argLine>
+                    <argLine>${jacoco.agent.argLine} -Dnet.bytebuddy.experimental=true</argLine>
+                    <forkCount>1</forkCount>
+                    <reuseForks>false</reuseForks>
                 </configuration>
                 <dependencies>
                     <dependency>
