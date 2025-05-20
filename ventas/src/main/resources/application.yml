@@ -58,4 +58,8 @@ springdoc:
     syntax-highlight:
       activated: true
       theme: monokai
-    disable-swagger-default-url: true 
+    disable-swagger-default-url: true
+
+productos:
+  service:
+    url: productos-app:8080 
