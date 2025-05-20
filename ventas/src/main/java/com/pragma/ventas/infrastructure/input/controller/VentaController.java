@@ -1,6 +1,6 @@
 package com.pragma.ventas.infrastructure.input.controller;
 
-import com.pragma.ventas.application.port.IVentaPort;
+import com.pragma.ventas.application.port.VentaInputPort;
 import com.pragma.ventas.domain.model.Venta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class VentaController {
 
-    private final IVentaPort ventaPort;
+    private final VentaInputPort ventaPort;
 
     @PostMapping
     public ResponseEntity<Venta> registrarVenta(@RequestBody Venta venta) {
