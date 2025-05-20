@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 management:
   endpoints:
     web:
@@ -46,6 +47,14 @@ spring:
       eager-load:
         enabled: true
         clients: productos
+      lazy-load:
+        enabled: false
+      health-check:
+        enabled: true
+      zone: default
+      instance:
+        prefer-ip-address: true
+        secure: false
 
 server:
   port: 8080
@@ -81,3 +90,6 @@ eureka:
       defaultZone: http://eureka-server:8761/eureka/
   instance:
     prefer-ip-address: true 
+=======
+ 
+>>>>>>> parent of fdca029 (Merge branch 'main' of https://github.com/axensz/microserviciosVentasProductos)
