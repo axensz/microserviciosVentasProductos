@@ -5,6 +5,7 @@ import com.pragma.domain.model.Producto;
 import com.pragma.infrastructure.input.rest.dto.ProductRequestDto;
 import com.pragma.infrastructure.input.rest.dto.ProductResponseDto;
 import com.pragma.infrastructure.input.rest.mapper.ProductRestMapper;
+import com.pragma.application.exception.ProductoNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -158,5 +159,27 @@ public class ProductController {
     public ResponseEntity<ProductResponseDto> actualizarStockProducto(@PathVariable Long id, @RequestParam Integer cantidad) {
         Producto productoActualizado = productInputPort.actualizarStockProducto(id, cantidad);
         return ResponseEntity.ok(productRestMapper.toProductResponseDto(productoActualizado));
+    }
+
+    /**
+     * Verifica si un producto existe por su ID.
+     *
+     * @param id El ID del producto a verificar.
+     * @return ResponseEntity con true si el producto existe, false en caso contrario.
+     */
+    @GetMapping("/{id}/existe")
+    @Operation(summary = "Verificar existencia de un producto",
+            description = "Verifica si un producto existe en el sistema por su ID.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Verificación exitosa",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class)))
+            })
+    public ResponseEntity<Boolean> existeProducto(@PathVariable Long id) {
+        try {
+            productInputPort.obtenerProductoPorId(id);
+            return ResponseEntity.ok(true);
+        } catch (ProductoNotFoundException e) {
+            return ResponseEntity.ok(false);
+        }
     }
 }

@@ -26,7 +26,7 @@ WORKDIR /app
 # Copiar solo el JAR generado desde el builder
 COPY --from=builder /app/target/*.jar app.jar
 
-# Exponer el puerto por defecto de Spring Boot
+# Exponer el puerto 8081 (mapeado desde 8080 en docker-compose)
 EXPOSE 8081
 
 # Ejecutar la aplicación
