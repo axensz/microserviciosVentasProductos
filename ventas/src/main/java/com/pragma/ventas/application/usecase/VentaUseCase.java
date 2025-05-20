@@ -8,12 +8,11 @@ import com.pragma.ventas.domain.repository.IProductoGateway;
 import com.pragma.ventas.domain.repository.VentaGateway;
 import com.pragma.ventas.infrastructure.input.dto.VentaRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Implementation of {@link VentaInputPort} that defines the use cases for sales management.
@@ -91,8 +90,8 @@ public class VentaUseCase implements VentaInputPort {
     }
 
     @Override
-    public Page<Venta> obtenerVentas(Pageable pageable) {
-        return ventaGateway.obtenerVentas(pageable);
+    public List<Venta> obtenerVentas() {
+        return ventaGateway.obtenerVentas();
     }
 
     @Override
@@ -102,15 +101,15 @@ public class VentaUseCase implements VentaInputPort {
     }
 
     @Override
-    public Page<Venta> obtenerVentasPorProducto(Long productoId, Pageable pageable) {
+    public List<Venta> obtenerVentasPorProducto(Long productoId) {
         if (!productoRepository.validarExistenciaProducto(productoId)) {
             throw new ProductNotFoundException("Producto no encontrado con ID: " + productoId);
         }
-        return ventaGateway.obtenerVentasPorProducto(productoId, pageable);
+        return ventaGateway.obtenerVentasPorProducto(productoId);
     }
 
     @Override
-    public Page<Venta> obtenerVentasPorFecha(LocalDate fecha, Pageable pageable) {
-        return ventaGateway.obtenerVentasPorFecha(fecha, pageable);
+    public List<Venta> obtenerVentasPorFecha(LocalDate fecha) {
+        return ventaGateway.obtenerVentasPorFecha(fecha);
     }
 } 

@@ -4,8 +4,6 @@ import com.pragma.ventas.domain.repository.VentaGateway;
 import com.pragma.ventas.domain.model.Venta;
 import com.pragma.ventas.infrastructure.output.persistence.VentaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -25,8 +23,8 @@ public class VentaGatewayAdapter implements VentaGateway {
     }
 
     @Override
-    public Page<Venta> obtenerVentas(Pageable pageable) {
-        return ventaRepository.findAll(pageable);
+    public List<Venta> obtenerVentas() {
+        return ventaRepository.findAll();
     }
 
     @Override
@@ -35,14 +33,14 @@ public class VentaGatewayAdapter implements VentaGateway {
     }
 
     @Override
-    public Page<Venta> obtenerVentasPorProducto(Long productoId, Pageable pageable) {
-        return ventaRepository.findByDetallesProductoId(productoId, pageable);
+    public List<Venta> obtenerVentasPorProducto(Long productoId) {
+        return ventaRepository.findByDetallesProductoId(productoId);
     }
 
     @Override
-    public Page<Venta> obtenerVentasPorFecha(LocalDate fecha, Pageable pageable) {
+    public List<Venta> obtenerVentasPorFecha(LocalDate fecha) {
         LocalDateTime inicioDia = fecha.atStartOfDay();
         LocalDateTime finDia = fecha.plusDays(1).atStartOfDay();
-        return ventaRepository.findByFechaBetween(inicioDia, finDia, pageable);
+        return ventaRepository.findByFechaBetween(inicioDia, finDia);
     }
 } 
