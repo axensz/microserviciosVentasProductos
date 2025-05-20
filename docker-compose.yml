@@ -19,6 +19,26 @@ services:
       timeout: 5s
       retries: 5
 
+  mariadb-ventas:
+    image: mariadb:10.11
+    container_name: mariadb-ventas
+    environment:
+      MARIADB_DATABASE: ventas_db
+      MARIADB_USER: ventas_user
+      MARIADB_PASSWORD: ventas_pass
+      MARIADB_ROOT_PASSWORD: root_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ventas_data:/var/lib/mysql
+    networks:
+      - microservicios-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "ventas_user", "-pventas_pass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 # Servicios de microservicios
   productos:
     build:
@@ -38,8 +58,29 @@ services:
       - microservicios-net
     restart: unless-stopped
 
+  ventas:
+    build:
+      context: ./ventas
+    container_name: ventas-app
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb-ventas:3306/ventas_db
+      SPRING_DATASOURCE_USERNAME: ventas_user
+      SPRING_DATASOURCE_PASSWORD: ventas_pass
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      mariadb-ventas:
+        condition: service_healthy
+      productos:
+        condition: service_started
+    networks:
+      - microservicios-net
+    restart: unless-stopped
+
 volumes:
   productos_data:
+  ventas_data:
 
 networks:
   microservicios-net:
