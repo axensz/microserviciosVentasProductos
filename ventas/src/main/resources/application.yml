@@ -35,6 +35,17 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
         format_sql: true
     open-in-view: false
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+      ribbon:
+        enabled: false
+      cache:
+        enabled: false
+      eager-load:
+        enabled: true
+        clients: productos
 
 server:
   port: 8080
