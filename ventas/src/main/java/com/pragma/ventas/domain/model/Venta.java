@@ -72,12 +72,12 @@ public class Venta {
 
     public boolean tieneDetalle(Long productoId) {
         return detalles.stream()
-            .anyMatch(detalle -> detalle.getProductoId().equals(productoId));
+            .anyMatch(detalle -> detalle.getProductoId() != null && detalle.getProductoId().equals(productoId));
     }
 
     public DetalleVenta obtenerDetalle(Long productoId) {
         return detalles.stream()
-            .filter(detalle -> detalle.getProductoId().equals(productoId))
+            .filter(detalle -> detalle.getProductoId() != null && detalle.getProductoId().equals(productoId))
             .findFirst()
             .orElse(null);
     }

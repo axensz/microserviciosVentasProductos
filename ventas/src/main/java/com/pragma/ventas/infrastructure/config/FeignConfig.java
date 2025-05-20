@@ -8,6 +8,7 @@ import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class FeignConfig {
@@ -20,9 +21,9 @@ public class FeignConfig {
     @Bean
     public Request.Options requestOptions() {
         return new Request.Options(
-            5000, // connectTimeout
-            5000, // readTimeout
-            true  // followRedirects
+            5, TimeUnit.SECONDS,    // connectTimeout
+            5, TimeUnit.SECONDS,    // readTimeout
+            true                    // followRedirects
         );
     }
 

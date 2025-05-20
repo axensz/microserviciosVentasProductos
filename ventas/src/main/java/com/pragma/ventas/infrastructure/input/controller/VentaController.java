@@ -8,16 +8,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -72,8 +68,7 @@ public class VentaController {
     @PreAuthorize("hasRole('ADMIN')")
     @Transactional(readOnly = true)
     public ResponseEntity<List<Venta>> obtenerVentasPorFecha(@PathVariable String fecha) {
-        LocalDateTime dateTime = LocalDateTime.parse(fecha, DateTimeFormatter.ISO_DATE_TIME);
-        LocalDate localDate = dateTime.atZone(ZoneId.systemDefault()).toLocalDate();
-        return ResponseEntity.ok(ventaInputPort.obtenerVentasPorFecha(localDate));
+        LocalDate fechaLocal = LocalDate.parse(fecha);
+        return ResponseEntity.ok(ventaInputPort.obtenerVentasPorFecha(fechaLocal));
     }
 } 

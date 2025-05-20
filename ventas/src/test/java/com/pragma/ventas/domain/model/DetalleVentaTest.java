@@ -115,7 +115,7 @@ class DetalleVentaTest {
         assertNotEquals(detalle7.hashCode(), detalle1.hashCode());
 
         // Caso 9: Diferentes tipos de objetos
-        assertFalse(detalle1.equals("No soy un DetalleVenta"));
+        assertFalse(detalle1.equals(new Object()));
     }
 
     @Test
