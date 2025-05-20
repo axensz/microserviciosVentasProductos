@@ -1,13 +1,24 @@
 management:
   endpoints:
     web:
+      base-path: /actuator
       exposure:
-        include: health,info
+        include: "*"
   endpoint:
     health:
       show-details: always
+      probes:
+        enabled: true
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
 
 spring:
+  config:
+    activate:
+      on-profile: prod
   application:
     name: ventas-service
   datasource:
@@ -46,21 +57,4 @@ springdoc:
     syntax-highlight:
       activated: true
       theme: monokai
-    disable-swagger-default-url: true
-
-management:
-  endpoints:
-    web:
-      base-path: /actuator
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-      probes:
-        enabled: true
-  health:
-    livenessState:
-      enabled: true
-    readinessState:
-      enabled: true 
+    disable-swagger-default-url: true 
