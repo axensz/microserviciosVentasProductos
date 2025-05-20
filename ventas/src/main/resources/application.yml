@@ -48,8 +48,8 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     enabled: true
-    config-url: /v3/api-docs/swagger-config
-    url: /v3/api-docs
+    config-url: /api/v1/v3/api-docs/swagger-config
+    url: /api/v1/v3/api-docs
     operations-sorter: method
     tags-sorter: alpha
     try-it-out-enabled: true
