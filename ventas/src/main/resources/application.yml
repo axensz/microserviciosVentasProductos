@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 management:
   endpoints:
     web:
@@ -90,6 +91,9 @@ eureka:
       defaultZone: http://eureka-server:8761/eureka/
   instance:
     prefer-ip-address: true 
+=======
+ 
+>>>>>>> parent of fdca029 (Merge branch 'main' of https://github.com/axensz/microserviciosVentasProductos)
 =======
  
 >>>>>>> parent of fdca029 (Merge branch 'main' of https://github.com/axensz/microserviciosVentasProductos)
