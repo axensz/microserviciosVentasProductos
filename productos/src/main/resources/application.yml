@@ -23,6 +23,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true # Formatea el SQL en los logs para mejor legibilidad
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+  address: 0.0.0.0
+
 # Configuración de OpenAPI / Swagger
 springdoc:
   api-docs:
