@@ -31,6 +31,9 @@ public class OpenApiConfig {
                                 .url("http://www.apache.org/licenses/LICENSE-2.0")))
                 .addServersItem(new Server()
                         .url(contextPath)
-                        .description("Servidor de Producción"));
+                        .description("Servidor de Producción"))
+                .addServersItem(new Server()
+                        .url("/")
+                        .description("Servidor Local"));
     }
 } 
